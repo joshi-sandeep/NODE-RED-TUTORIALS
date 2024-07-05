@@ -1,0 +1,377 @@
+[
+    {
+        "id": "40461bd5482c6f38",
+        "type": "group",
+        "z": "888d7ad676974db3",
+        "style": {
+            "stroke": "#999999",
+            "stroke-opacity": "1",
+            "fill": "none",
+            "fill-opacity": "1",
+            "label": true,
+            "label-position": "nw",
+            "color": "#a4a4a4"
+        },
+        "nodes": [
+            "3234f262056babaf",
+            "63daa2969066caec",
+            "d6577d4db9cbded4",
+            "b97d8dcaebe9cc85",
+            "9415f762de6c9ced",
+            "4158a248e1e2b3e4",
+            "572e6832bcf30618",
+            "bf8022099b6ce347",
+            "966379b5822bea96",
+            "20fc9533e15a9b16",
+            "dc0ddfa85869080c",
+            "b300a73d7dc605ae",
+            "ea6ce5623dba5f24"
+        ],
+        "x": 4,
+        "y": 59,
+        "w": 1002,
+        "h": 482
+    },
+    {
+        "id": "3234f262056babaf",
+        "type": "delay",
+        "z": "888d7ad676974db3",
+        "g": "40461bd5482c6f38",
+        "name": "Recursive delay",
+        "pauseType": "delayv",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": true,
+        "allowrate": true,
+        "outputs": 1,
+        "x": 680,
+        "y": 360,
+        "wires": [
+            [
+                "63daa2969066caec",
+                "572e6832bcf30618"
+            ]
+        ]
+    },
+    {
+        "id": "63daa2969066caec",
+        "type": "debug",
+        "z": "888d7ad676974db3",
+        "g": "40461bd5482c6f38",
+        "name": "debug 34",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 900,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "d6577d4db9cbded4",
+        "type": "inject",
+        "z": "888d7ad676974db3",
+        "g": "40461bd5482c6f38",
+        "name": "1s rate",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "1000",
+        "payloadType": "num",
+        "x": 110,
+        "y": 220,
+        "wires": [
+            [
+                "4158a248e1e2b3e4"
+            ]
+        ]
+    },
+    {
+        "id": "b97d8dcaebe9cc85",
+        "type": "inject",
+        "z": "888d7ad676974db3",
+        "g": "40461bd5482c6f38",
+        "name": "2s rate",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "2000",
+        "payloadType": "num",
+        "x": 110,
+        "y": 260,
+        "wires": [
+            [
+                "4158a248e1e2b3e4"
+            ]
+        ]
+    },
+    {
+        "id": "9415f762de6c9ced",
+        "type": "inject",
+        "z": "888d7ad676974db3",
+        "g": "40461bd5482c6f38",
+        "name": "5s rate",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "5000",
+        "payloadType": "num",
+        "x": 110,
+        "y": 300,
+        "wires": [
+            [
+                "4158a248e1e2b3e4"
+            ]
+        ]
+    },
+    {
+        "id": "4158a248e1e2b3e4",
+        "type": "change",
+        "z": "888d7ad676974db3",
+        "g": "40461bd5482c6f38",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "ratelimit",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "tick",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "trigger",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 300,
+        "y": 260,
+        "wires": [
+            [
+                "b300a73d7dc605ae",
+                "dc0ddfa85869080c"
+            ]
+        ]
+    },
+    {
+        "id": "572e6832bcf30618",
+        "type": "change",
+        "z": "888d7ad676974db3",
+        "g": "40461bd5482c6f38",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "delay",
+                "pt": "msg",
+                "to": "ratelimit",
+                "tot": "flow"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 660,
+        "y": 260,
+        "wires": [
+            [
+                "3234f262056babaf"
+            ]
+        ]
+    },
+    {
+        "id": "bf8022099b6ce347",
+        "type": "inject",
+        "z": "888d7ad676974db3",
+        "g": "40461bd5482c6f38",
+        "name": "Stop",
+        "props": [
+            {
+                "p": "reset",
+                "v": "",
+                "vt": "date"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 450,
+        "y": 420,
+        "wires": [
+            [
+                "3234f262056babaf"
+            ]
+        ]
+    },
+    {
+        "id": "966379b5822bea96",
+        "type": "comment",
+        "z": "888d7ad676974db3",
+        "g": "40461bd5482c6f38",
+        "name": "Programmable interval inject",
+        "info": "This flow functions and an inject node, but allows the interval to be changed.\nThe basic principle that the delay node output if fed back to itself through a change node which sets the appropriate delay for each message.\n\nThe 3 sample inject node set the interval to 1s, 2s, 5s. The interval is sent in the msg.payload in milliseconds.\nThese inject nodes can be supplemented with a dashboard input field (slider, dropdown) so it can be controlled from the screen as well.\nThis flow does not start sending out messages when deployed, if that is required, create another inject node with default rate and set to trigger on startup. \nI also added a \"Autostart with saved value\" this should be used if the flow variable is saved to file (in that case update the change nodes to use the file storage) so it can restart the trigger with the last delay value read from the file system (set this inject node to trigger on startup).\n\nThe interval is stored in a flow context variable, and this value is inserted into the message every time by the change node above the delay node. This ensures that if the rate value in the context value changes, it is applied at the next message.\n\nI added the delay 100ms and the msg.reset nodes, because when the rate changes it introduces a new message the recursive loop and that would mess up the timing.\n\n\"Stop\" inject node resets the delay node (deleted the message that keeps triggeting itelf) and stops the process.",
+        "x": 150,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "20fc9533e15a9b16",
+        "type": "inject",
+        "z": "888d7ad676974db3",
+        "g": "40461bd5482c6f38",
+        "name": "Autostart with saved value",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "tick",
+        "payload": "trigger",
+        "payloadType": "str",
+        "x": 690,
+        "y": 100,
+        "wires": [
+            [
+                "572e6832bcf30618"
+            ]
+        ]
+    },
+    {
+        "id": "dc0ddfa85869080c",
+        "type": "change",
+        "z": "888d7ad676974db3",
+        "g": "40461bd5482c6f38",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "reset",
+                "pt": "msg",
+                "to": "reset",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 440,
+        "y": 320,
+        "wires": [
+            [
+                "3234f262056babaf"
+            ]
+        ]
+    },
+    {
+        "id": "b300a73d7dc605ae",
+        "type": "delay",
+        "z": "888d7ad676974db3",
+        "g": "40461bd5482c6f38",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "100",
+        "timeoutUnits": "milliseconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 430,
+        "y": 180,
+        "wires": [
+            [
+                "572e6832bcf30618"
+            ]
+        ]
+    },
+    {
+        "id": "ea6ce5623dba5f24",
+        "type": "comment",
+        "z": "888d7ad676974db3",
+        "g": "40461bd5482c6f38",
+        "name": "======SUBSCRIBE TO MY CHANNEL======",
+        "info": "",
+        "x": 460,
+        "y": 500,
+        "wires": []
+    }
+]
