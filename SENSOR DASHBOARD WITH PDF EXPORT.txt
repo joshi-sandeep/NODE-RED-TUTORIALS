@@ -1,0 +1,388 @@
+[
+    {
+        "id": "d92d1f8b15cbf0dd",
+        "type": "group",
+        "z": "b0c7c5fbfbcfef09",
+        "style": {
+            "stroke": "#999999",
+            "stroke-opacity": "1",
+            "fill": "none",
+            "fill-opacity": "1",
+            "label": true,
+            "label-position": "nw",
+            "color": "#a4a4a4"
+        },
+        "nodes": [
+            "d5c052a378f08c9a",
+            "dfe4ef5bf980eb94",
+            "ef073687711eb225",
+            "cc374bc6f4502980",
+            "d42b8b253a462f45",
+            "4e2c830735232c7e",
+            "346a5b3a7682927d"
+        ],
+        "x": 114,
+        "y": 39,
+        "w": 772,
+        "h": 302
+    },
+    {
+        "id": "d5c052a378f08c9a",
+        "type": "ui_button",
+        "z": "b0c7c5fbfbcfef09",
+        "g": "d92d1f8b15cbf0dd",
+        "name": "",
+        "group": "780d3622f86e7d7c",
+        "order": 2,
+        "width": 5,
+        "height": 1,
+        "passthru": false,
+        "label": "Refresh Data",
+        "tooltip": "Load Data from Database",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "fa-refresh",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 210,
+        "y": 80,
+        "wires": [
+            [
+                "dfe4ef5bf980eb94"
+            ]
+        ]
+    },
+    {
+        "id": "dfe4ef5bf980eb94",
+        "type": "function",
+        "z": "b0c7c5fbfbcfef09",
+        "g": "d92d1f8b15cbf0dd",
+        "name": "Get Sensor Values",
+        "func": "msg.collection = \"sensor_values\";\nmsg.operation = \"find\";\nmsg.payload = {};\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 250,
+        "y": 140,
+        "wires": [
+            [
+                "346a5b3a7682927d"
+            ]
+        ]
+    },
+    {
+        "id": "ef073687711eb225",
+        "type": "debug",
+        "z": "b0c7c5fbfbcfef09",
+        "g": "d92d1f8b15cbf0dd",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 560,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "cc374bc6f4502980",
+        "type": "ui_chart",
+        "z": "b0c7c5fbfbcfef09",
+        "g": "d92d1f8b15cbf0dd",
+        "name": "",
+        "group": "780d3622f86e7d7c",
+        "order": 1,
+        "width": 10,
+        "height": 6,
+        "label": "Values",
+        "chartType": "line",
+        "legend": "true",
+        "xformat": "HH:mm",
+        "interpolate": "linear",
+        "nodata": "No Data Available",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 810,
+        "y": 180,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d42b8b253a462f45",
+        "type": "ui_button",
+        "z": "b0c7c5fbfbcfef09",
+        "g": "d92d1f8b15cbf0dd",
+        "name": "",
+        "group": "780d3622f86e7d7c",
+        "order": 3,
+        "width": 5,
+        "height": 1,
+        "passthru": false,
+        "label": "Delete Chart Data",
+        "tooltip": "Deletes Data in Chart",
+        "color": "",
+        "bgcolor": "red",
+        "className": "",
+        "icon": "fa-trash",
+        "payload": "[]",
+        "payloadType": "json",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 590,
+        "y": 100,
+        "wires": [
+            [
+                "cc374bc6f4502980"
+            ]
+        ]
+    },
+    {
+        "id": "4e2c830735232c7e",
+        "type": "function",
+        "z": "b0c7c5fbfbcfef09",
+        "g": "d92d1f8b15cbf0dd",
+        "name": "Plot DB Data",
+        "func": "const inp = msg.payload;\nvar outObj = [{\n    series: [\"Sensor Values\"],\n    data: [[]],\n    lables: [\"\"]\n}]\n\n// Fill chart Object with Data\nfor (let item of inp) {\n    outObj[0].data[0].push({\n        x: item.timestamp,\n        y: item.values\n    })\n}\nconsole.log(\"dddddddd\", outObj)\nflow.set('chartData', outObj); // Save chart data to flow context\nmsg.payload = outObj;\n\n return msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 570,
+        "y": 200,
+        "wires": [
+            [
+                "cc374bc6f4502980"
+            ]
+        ]
+    },
+    {
+        "id": "346a5b3a7682927d",
+        "type": "mongodb in",
+        "z": "b0c7c5fbfbcfef09",
+        "g": "d92d1f8b15cbf0dd",
+        "mongodb": "22c7ef805a91aa60",
+        "name": "",
+        "collection": "test_data",
+        "operation": "find",
+        "x": 270,
+        "y": 260,
+        "wires": [
+            [
+                "ef073687711eb225",
+                "4e2c830735232c7e"
+            ]
+        ]
+    },
+    {
+        "id": "780d3622f86e7d7c",
+        "type": "ui_group",
+        "name": "Sensor Values",
+        "tab": "6d0b5357286648fe",
+        "order": 1,
+        "disp": true,
+        "width": 10,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "22c7ef805a91aa60",
+        "type": "mongodb",
+        "hostname": "127.0.0.1",
+        "topology": "direct",
+        "connectOptions": "",
+        "port": "27017",
+        "db": "test",
+        "name": ""
+    },
+    {
+        "id": "6d0b5357286648fe",
+        "type": "ui_tab",
+        "name": "DB",
+        "icon": "dashboard",
+        "order": 1,
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "ad611dd84e524f37",
+        "type": "group",
+        "z": "b0c7c5fbfbcfef09",
+        "style": {
+            "stroke": "#999999",
+            "stroke-opacity": "1",
+            "fill": "none",
+            "fill-opacity": "1",
+            "label": true,
+            "label-position": "nw",
+            "color": "#a4a4a4"
+        },
+        "nodes": [
+            "67e339daa36faa0f",
+            "b9d09f5dcaa904ca",
+            "b7423c1494a46cef",
+            "b0c025b39b7d08bd",
+            "5845ed78a6e35209",
+            "ac4c76d56d982ec0"
+        ],
+        "x": 114,
+        "y": 379,
+        "w": 772,
+        "h": 262
+    },
+    {
+        "id": "67e339daa36faa0f",
+        "type": "pdfmake",
+        "z": "b0c7c5fbfbcfef09",
+        "g": "ad611dd84e524f37",
+        "name": "pdf generater",
+        "outputType": "Buffer",
+        "inputProperty": "payload",
+        "options": "{}",
+        "outputProperty": "payload",
+        "x": 590,
+        "y": 480,
+        "wires": [
+            [
+                "5845ed78a6e35209",
+                "ac4c76d56d982ec0"
+            ]
+        ]
+    },
+    {
+        "id": "b9d09f5dcaa904ca",
+        "type": "function",
+        "z": "b0c7c5fbfbcfef09",
+        "g": "ad611dd84e524f37",
+        "name": "Format PDF Data",
+        "func": "const chartData = flow.get('chartData');\n\nif (!chartData) {\n    node.error('Chart data is undefined');\n    return null;\n}\n \nmsg.payload = {\n    content: [\n        { text: 'Sensor Values Line Chart', style: 'header' },\n        { \n            style: 'tableExample',\n            table: {\n                widths: ['*'],\n                body: chartData[0].data[0].map(item => [ `Timestamp: ${item.x}, Value: ${item.y}` ])\n            }\n        }\n    ],\n    styles: {\n        header: {\n            fontSize: 18,\n            bold: true\n        },\n        tableExample: {\n            margin: [0, 5, 0, 15]\n        }\n    }\n};\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 410,
+        "y": 540,
+        "wires": [
+            [
+                "b0c025b39b7d08bd",
+                "67e339daa36faa0f"
+            ]
+        ]
+    },
+    {
+        "id": "b7423c1494a46cef",
+        "type": "ui_button",
+        "z": "b0c7c5fbfbcfef09",
+        "g": "ad611dd84e524f37",
+        "name": "",
+        "group": "780d3622f86e7d7c",
+        "order": 4,
+        "width": 5,
+        "height": 1,
+        "passthru": false,
+        "label": "Export to PDF",
+        "tooltip": "Export Chart to PDF",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "fa-file-pdf-o",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "",
+        "x": 220,
+        "y": 540,
+        "wires": [
+            [
+                "b9d09f5dcaa904ca"
+            ]
+        ]
+    },
+    {
+        "id": "b0c025b39b7d08bd",
+        "type": "debug",
+        "z": "b0c7c5fbfbcfef09",
+        "g": "ad611dd84e524f37",
+        "name": "PDF Payload",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 590,
+        "y": 600,
+        "wires": []
+    },
+    {
+        "id": "5845ed78a6e35209",
+        "type": "file",
+        "z": "b0c7c5fbfbcfef09",
+        "g": "ad611dd84e524f37",
+        "name": "Save PDF",
+        "filename": "D:/ytexamples/chart.pdf",
+        "filenameType": "str",
+        "appendNewline": true,
+        "createDir": false,
+        "overwriteFile": "true",
+        "encoding": "none",
+        "x": 780,
+        "y": 540,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ac4c76d56d982ec0",
+        "type": "debug",
+        "z": "b0c7c5fbfbcfef09",
+        "g": "ad611dd84e524f37",
+        "name": "PDF Payload",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 770,
+        "y": 420,
+        "wires": []
+    }
+]
